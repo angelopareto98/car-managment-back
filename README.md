@@ -1,5 +1,5 @@
-# This is the back end of our car management project
+# ************ This is the back end of our car management project *************
 
-# Don't forget to make composer install after clonnign this.
+# *********** Don't forget to make composer install after clonnign this. ********
 
-# We push just from branch develop
+- php bin/console doctrine:migrations:migrate
