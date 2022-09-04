@@ -6,3 +6,8 @@ Car:
     - numberCar, mark: [String, 100, not null]
     - priceUnit: [float, not null]
     - stock: [integer, not null]
+
+Vente:
+    - date: [DateTime, not null]
+    - qte: [integer, not null]
+    - user: []

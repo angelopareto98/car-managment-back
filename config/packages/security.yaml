@@ -34,9 +34,10 @@ security:
     access_control:
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing API documentations and Swagger UI
         - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
-        # - { path: ^/api/users,       roles: PUBLIC_ACCESS, methods: [POST] }
-        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, DELETE, PUT, PATCH] }
-        - { path: ^/api/cars, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, PATCH] }
+        - { path: ^/api/users, roles: ROLE_ADMIN, methods: [DELETE] }
+        - { path: ^/api/cars, roles: ROLE_ADMIN }
+        # - { path: ^/api/users,       roles: PUBLIC_ACCESS, methods: [POST] } // same in route.yaml/authentication_token:
         # - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
