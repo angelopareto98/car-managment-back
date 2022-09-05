@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -48,6 +50,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Groups(['user:read', 'user:write'])]
     private ?string $adress = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Sale::class)]
+    #[Groups(['user:read'])]
+    private Collection $sales;
+
+    public function __construct()
+    {
+        $this->sales = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,6 +162,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAdress(string $adress): self
     {
         $this->adress = $adress;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sale>
+     */
+    public function getSales(): Collection
+    {
+        return $this->sales;
+    }
+
+    public function addSale(Sale $sale): self
+    {
+        if (!$this->sales->contains($sale)) {
+            $this->sales->add($sale);
+            $sale->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSale(Sale $sale): self
+    {
+        if ($this->sales->removeElement($sale)) {
+            // set the owning side to null (unless already changed)
+            if ($sale->getUser() === $this) {
+                $sale->setUser(null);
+            }
+        }
 
         return $this;
     }

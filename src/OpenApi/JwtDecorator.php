@@ -34,7 +34,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
             'properties' => [
                 'email' => [
                     'type' => 'string',
-                    'example' => 'anghack@example.com',
+                    'example' => 'anghack@symfony.com',
                 ],
                 'password' => [
                     'type' => 'string',

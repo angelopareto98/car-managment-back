@@ -7,7 +7,8 @@ Car:
     - priceUnit: [float, not null]
     - stock: [integer, not null]
 
-Vente:
-    - date: [DateTime, not null]
+Sale:
+    - date: [dateTime, not null]
     - qte: [integer, not null]
-    - user: []
+    - user: [relation, User, ManyToOne, yes, yes(sales)]
+    - cars: [relation, Car, OneToMany, yes, yes(sales)]

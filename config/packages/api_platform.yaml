@@ -1,5 +1,5 @@
 api_platform:
-    title: 'REST API Symfony to manage Car'
+    title: "REST API Symfony to manage Car ----- Zanak'i Aba ------"
     description: "Created by 'back => Angelo Hackeretovic' and 'front => Kererion'"
     version: '1.0.0'
     mapping:
