@@ -1,0 +1,14 @@
+User : 
+    - name, username, adress, password, : [String, 255, not null]
+    - roles [json, default=>"ROLE_CUSTOMER"]
+
+Car:
+    - numberCar, mark: [String, 100, not null]
+    - priceUnit: [float, not null]
+    - stock: [integer, not null]
+
+Sale:
+    - date: [dateTime, not null]
+    - qte: [integer, not null]
+    - user: [relation, User, ManyToOne, yes, yes(sales)]
+    - cars: [relation, Car, OneToMany, yes, yes(sales)]
