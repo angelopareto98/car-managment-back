@@ -23,7 +23,7 @@ final class CarNormalizer implements NormalizerInterface, NormalizerAwareInterfa
     {
         $context[self::ALREADY_CALLED] = true;
 
-        $object->contentUrl = $this->storage->resolveUri($object, 'file');
+        $object->contentUrl = $this->storage->resolveUri($object, 'image');
 
         return $this->normalizer->normalize($object, $format, $context);
     }
