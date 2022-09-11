@@ -2,12 +2,28 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CarRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CarRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    iri: 'https://schema.org/Car',
+    normalizationContext: ['groups' => ['car:read']],
+    denormalizationContext: ['groups' => ['car:write']],
+    collectionOperations: [
+        'GET',
+        'POST' => [
+            'input_formats' => [
+                'multipart' => 'multipart/form-data'
+            ],
+        ],
+    ],
+)]
 class Car
 {
     #[ORM\Id]
@@ -16,16 +32,33 @@ class Car
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['car:read'])]
     private ?string $numberCar = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['car:read', 'car:write'])]
     private ?string $mark = null;
 
     #[ORM\Column]
+    #[Groups(['car:read', 'car:write'])]
     private ?float $priceUnit = null;
 
     #[ORM\Column]
+    #[Groups(['car:read', 'car:write'])]
     private ?int $stock = null;
+
+    #[ApiProperty(iri: 'https://schema.org/contentUrl')]
+    #[Groups(['car:read'])]
+    public ?string $contentUrl = null;
+
+    /**
+     * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
+    */
+    #[Groups(['car:write'])]
+    public ?File $file = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $filePath = null;
 
     public function getId(): ?int
     {
@@ -76,6 +109,18 @@ class Car
     public function setStock(int $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): self
+    {
+        $this->filePath = $filePath;
 
         return $this;
     }
