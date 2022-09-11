@@ -1,4 +1,4 @@
-# ************ This is the backEnd of our car management project *************
+# This is the backEnd of our car management project
 
 This repository is help you to manage the Car
 
@@ -25,11 +25,14 @@ If you haven't created a database, you can create it with doctrine:
 ---
 
 ### For authentication JWT token
+- install the bundle jwt
+```install bundle jwt
 - composer require "lexik/jwt-authentication-bundle"
+```
 
+- install ssl 
 ``` install ssl, and then
 - php bin/console lexik:jwt:generate-keypair
-
 OR
 - mkdir -p config/jwt
 - openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
